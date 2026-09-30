@@ -1,0 +1,49 @@
+import Image from "next/image";
+import { ICONS, brandAsset, resolveColourway, type Colourway, type IconName } from "@/lib/brand/assets";
+
+/**
+ * One icon from the school's four brand icon sets.
+ *
+ * The sets exist to "enhance the brand in different artworks", and between
+ * them they replace every decorative illustration the Bloomy template shipped
+ * — which is also what removes the template's third-party artwork licence
+ * from the project.
+ *
+ * `alt` is required. The template shipped 805 images with no meaningful alt
+ * text and we are not repeating that; pass "" explicitly for a purely
+ * decorative icon so the choice is visible in the code.
+ */
+export function BrandIcon({
+  name,
+  alt,
+  colourway = "ink-gold",
+  size = 48,
+  className,
+}: {
+  name: IconName;
+  alt: string;
+  colourway?: Colourway;
+  size?: number;
+  className?: string;
+}) {
+  const entry = ICONS[name];
+  const resolved = resolveColourway(entry, colourway);
+
+  // Icons are not square. Fit them inside a `size` box on their long edge so a
+  // row of them optically aligns instead of jumping about.
+  const ratio = entry.width / entry.height;
+  const width = ratio >= 1 ? size : Math.round(size * ratio);
+  const height = ratio >= 1 ? Math.round(size / ratio) : size;
+
+  return (
+    <Image
+      src={brandAsset(entry, resolved)}
+      alt={alt}
+      width={width}
+      height={height}
+      aria-hidden={alt === "" || undefined}
+      className={className}
+      style={{ width, height }}
+    />
+  );
+}

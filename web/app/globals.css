@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   All Nations Prep School — design tokens
+   ---------------------------------------------------------------------------
+   Colour, type and shape come from ALL NATIONS STYLE GUIDELINES.pdf.
+   Layout, radii and motion are inherited from the Bloomy template export,
+   which is structure rather than identity.
+
+   This block is the ONLY place brand values are defined. Nothing downstream
+   may hard-code a colour or a font.
+   =========================================================================== */
+
+@theme {
+  /* --- Breakpoints -------------------------------------------------------
+     The template ships exactly three: phone, tablet, desktop. Tailwind's
+     defaults are cleared so a stray `sm:` or `xl:` fails loudly instead of
+     silently introducing a fourth breakpoint the design never accounted for. */
+  --breakpoint-*: initial;
+  --breakpoint-md: 810px;    /* tablet  810 – 1199.98 */
+  --breakpoint-lg: 1200px;   /* desktop 1200+         */
+
+  /* --- Colour ------------------------------------------------------------
+     Tailwind's default palette is cleared so that `bg-red-500` is a visible
+     mistake. Only the five brand colours and their approved tints exist.
+
+     Guidelines hex values are authoritative. The supplied artwork carried
+     slightly different RGB (gold #F2A819, green #019642, sky #028B99); the
+     asset pipeline normalises it to these on import. */
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-inherit: inherit;
+
+  --color-ink: #023266;      /* Inky Blue     — main   */
+  --color-gold: #f1a719;     /* Yellow Banana — main   */
+  --color-green: #019042;    /* Fruity Green  — accent */
+  --color-sky: #028593;      /* Blue Sky      — accent */
+  --color-grey: #d6d6d6;     /* Cloudy Grey   — accent */
+
+  /* Tints. The suffix is the percentage of white mixed in, so `ink-t85` is
+     Inky Blue at 85% white. The guidelines sanction these: "use lighter or
+     darker tones of the brand colors as backgrounds". They are what carries
+     the template's alternating section grounds without inventing a colour. */
+  --color-ink-t20: #355b85;
+  --color-ink-t40: #6784a3;
+  --color-ink-t60: #9aadc2;
+  --color-ink-t85: #d9e0e8;
+  --color-ink-t94: #f0f3f6;
+
+  --color-gold-t20: #f4b947;
+  --color-gold-t40: #f7ca75;
+  --color-gold-t60: #f9dca3;
+  --color-gold-t85: #fdf2dc;
+  --color-gold-t94: #fefaf1;
+
+  --color-green-t60: #99d3b3;
+  --color-green-t85: #d9eee3;
+  --color-green-t94: #f0f8f4;
+
+  --color-sky-t60: #9aced4;
+  --color-sky-t85: #d9edef;
+  --color-sky-t94: #f0f8f9;
+
+  /* --- Type --------------------------------------------------------------
+     The brand typeface is Arial Rounded MT. It ships as a desktop licence
+     only, so it cannot be served as a webfont without a separate licence.
+     Nunito stands in: rounded terminals, humanist, and it covers Regular /
+     Bold / ExtraBold with room to spare.
+
+     TO SWAP IN THE LICENSED FACE: change this one line and the loader in
+     app/fonts.ts. Nothing else references a font family. */
+  --font-body: var(--font-brand), "Trebuchet MS", "Segoe UI", sans-serif;
+
+  /* --- Shape and layout — from the template ------------------------------ */
+  --radius-card: 16px;
+  --radius-pill: 100px;
+  --container-site: 1236px;
+
+  /* --- Motion — the template's signature curve --------------------------- */
+  --ease-brand: cubic-bezier(0.44, 0, 0.56, 1);
+}
+
+/* ===========================================================================
+   Type hierarchy
+   ---------------------------------------------------------------------------
+   The guidelines define six levels by relative step (-2pt, -0pt, -2pt, -0pt,
+   -4pt), which is a print convention. These classes map those steps onto a
+   concrete responsive scale, preserving the weight and case rules exactly.
+
+   UPPERCASE is applied with text-transform so the underlying HTML stays in
+   sentence case and screen readers announce words rather than letters.
+   =========================================================================== */
+@layer components {
+  .type-display,
+  .type-sub1,
+  .type-sub2,
+  .type-sub3 {
+    font-family: var(--font-body);
+    text-wrap: balance;
+  }
+
+  /* Main heading — Arial Rounded Extra Bold, UPPERCASE */
+  .type-display {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 34px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  /* Sub-heading 1 — Bold, UPPERCASE */
+  .type-sub1 {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 26px;
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+  }
+  /* Sub-heading 2 — Bold, Titlecase (same size as sub1, softer voice) */
+  .type-sub2 {
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+  /* Sub-heading 3 — Bold, Titlecase */
+  .type-sub3 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+  /* Body text — Regular */
+  .type-body {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  /* Small text — Regular */
+  .type-small {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 810px) {
+    .type-display { font-size: 48px; letter-spacing: -0.025em; }
+    .type-sub1,
+    .type-sub2    { font-size: 32px; }
+    .type-sub3    { font-size: 22px; }
+    .type-body    { font-size: 18px; }
+  }
+
+  @media (min-width: 1200px) {
+    .type-display { font-size: 64px; letter-spacing: -0.03em; }
+    .type-sub1,
+    .type-sub2    { font-size: 40px; }
+    .type-sub3    { font-size: 24px; }
+  }
+}
+
+/* ===========================================================================
+   Base
+   =========================================================================== */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-white);
+    color: var(--color-ink);           /* 12.72:1 on white */
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  /* A visible focus ring is a requirement, not a preference. */
+  :focus-visible {
+    outline: 3px solid var(--color-sky);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ===========================================================================
+   Utilities
+   =========================================================================== */
+
+/* The template's 1236px content container with a 20px gutter at every width. */
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* The template's sticker tilt, used on badges and labels. */
+@utility tilt {
+  rotate: -4deg;
+}
