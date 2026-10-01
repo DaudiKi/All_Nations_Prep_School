@@ -96,7 +96,7 @@ export default function StyleGuide() {
             <p className="type-body mt-2">{SCHOOL.mission}</p>
           </div>
           <div className="rounded-[var(--radius-card)] bg-ink-t94 p-6">
-            <p className="type-small font-bold uppercase tracking-[0.14em] text-sky">Vision</p>
+            <p className="type-small font-bold uppercase tracking-[0.14em] text-sky-dark">Vision</p>
             <p className="type-body mt-2">{SCHOOL.vision}</p>
           </div>
         </div>
@@ -229,7 +229,7 @@ export default function StyleGuide() {
               </div>
               <p className="type-small font-bold capitalize">{name}</p>
               <p className="type-small text-ink-t20">{VARIANT_NOTES[name]}</p>
-              <p className="type-small mt-2 text-ink-t40">
+              <p className="type-small mt-2 text-ink-t20">
                 {LOGOS[name].colourways.length} colourways ·{" "}
                 {LOGOS[name].width}&times;{LOGOS[name].height}
               </p>

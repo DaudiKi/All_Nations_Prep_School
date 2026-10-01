@@ -29,21 +29,28 @@ export function BrandIcon({
   const entry = ICONS[name];
   const resolved = resolveColourway(entry, colourway);
 
-  // Icons are not square. Fit them inside a `size` box on their long edge so a
-  // row of them optically aligns instead of jumping about.
+  // The icons are not square and their aspect ratios differ widely, so fitting
+  // each one to `size` on its long edge leaves a row of them with different
+  // heights — which pushes the heading under a wide icon out of line with its
+  // neighbours. Each icon is scaled to fit and then centred in a `size` box, so
+  // a row of cards keeps one baseline whatever icons it happens to use.
   const ratio = entry.width / entry.height;
   const width = ratio >= 1 ? size : Math.round(size * ratio);
   const height = ratio >= 1 ? Math.round(size / ratio) : size;
 
   return (
-    <Image
-      src={brandAsset(entry, resolved)}
-      alt={alt}
-      width={width}
-      height={height}
-      aria-hidden={alt === "" || undefined}
+    <span
       className={className}
-      style={{ width, height }}
-    />
+      style={{ display: "flex", alignItems: "center", height: size, lineHeight: 0 }}
+    >
+      <Image
+        src={brandAsset(entry, resolved)}
+        alt={alt}
+        width={width}
+        height={height}
+        aria-hidden={alt === "" || undefined}
+        style={{ width, height }}
+      />
+    </span>
   );
 }

@@ -7,19 +7,26 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "brand": "node scripts/build-brand-assets.mjs"
+    "brand": "node scripts/build-brand-assets.mjs",
+    "check:brand": "node scripts/check-brand.mjs",
+    "check:content": "node scripts/check-content.mjs",
+    "check": "npm run check:brand && npm run check:content && npx tsc --noEmit && npx eslint ."
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.3",
     "motion": "^13.4.6",
     "next": "16.3.8",
+    "postgres": "^3.4.9",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
     "svgo": "^4.1.0",

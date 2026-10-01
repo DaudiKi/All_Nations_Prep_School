@@ -45,6 +45,9 @@
      darker tones of the brand colors as backgrounds". They are what carries
      the template's alternating section grounds without inventing a colour. */
   --color-ink-t20: #355b85;
+  /* ink-t40 and lighter are for borders, dividers and decoration only —
+     #6784a3 is 3.88:1 on white and fails AA for text at any size below 24px.
+     Use ink-t20 (7.03:1) when a muted TEXT colour is wanted. */
   --color-ink-t40: #6784a3;
   --color-ink-t60: #9aadc2;
   --color-ink-t85: #d9e0e8;
@@ -59,6 +62,13 @@
   --color-green-t60: #99d3b3;
   --color-green-t85: #d9eee3;
   --color-green-t94: #f0f8f4;
+
+  /* A darker tone of Blue Sky, for small text.
+     Blue Sky itself is 4.39:1 on white and so fails WCAG AA for anything below
+     24px — it is an accent for fills and large type, not a text colour. This
+     shade clears 4.5:1 on every ground the site uses it over, and "darker tones
+     of the brand colors" is expressly permitted by the guidelines. */
+  --color-sky-dark: #02717d;
 
   --color-sky-t60: #9aced4;
   --color-sky-t85: #d9edef;
