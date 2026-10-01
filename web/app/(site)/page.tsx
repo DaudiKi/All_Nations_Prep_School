@@ -46,22 +46,29 @@ export default async function Home() {
       <section className="relative overflow-hidden bg-ink text-white">
         <Pattern name="official" colourway="white-gold" opacity={0.1} size={300} />
         <div className="container-site relative py-20 md:py-28 lg:py-32">
-          <Reveal from="hero" duration={1}>
+          {/*
+            The template's whole motion design is this one load sequence: four
+            steps, hero only, nothing scroll-triggered anywhere in the export.
+            The offsets, durations and delays below are its exact values.
+          */}
+          <Reveal from="hero" trigger="load" duration={1}>
             <Pill tone="gold" tilt>Daycare &middot; Kindergarten &middot; Primary</Pill>
           </Reveal>
 
           <SplitText
             text="Train up a child in the way to go"
             as="h1"
+            by="char"
+            trigger="load"
             className="type-display mt-6 max-w-[16ch] text-white"
-            delay={0.2}
+            delay={0.25}
           />
 
-          <Reveal delay={0.6}>
+          <Reveal trigger="load" delay={0.6}>
             <p className="type-body mt-6 max-w-[54ch] text-white/80">{SCHOOL.mission}</p>
           </Reveal>
 
-          <Reveal delay={0.8}>
+          <Reveal trigger="load" delay={0.8}>
             <div className="mt-9 flex flex-wrap gap-3">
               <Button href="/admissions" variant="primary">Apply for a place</Button>
               <Button href="/programmes" variant="onDark">Explore our programmes</Button>

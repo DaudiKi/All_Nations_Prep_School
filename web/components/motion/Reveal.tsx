@@ -2,30 +2,37 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
-import { DURATION, EASE, FROM } from "./easing";
+import { DURATION, EASE, FROM, SPRING } from "./easing";
 
 type RevealProps = {
   children: ReactNode;
   /** Which of the template's entrance offsets to use. */
   from?: keyof typeof FROM;
+  /**
+   * How the animation starts.
+   *
+   * The template only ever animates on page load: its export carries four
+   * appear animations and not one scroll trigger. `load` is therefore the
+   * faithful option and is what the hero uses. `scroll` is a deliberate
+   * addition for content far below the fold, where a load animation would
+   * have finished long before anyone saw it.
+   */
+  trigger?: "load" | "scroll";
   delay?: number;
   duration?: number;
-  /** Render as something other than a div when the wrapper matters for layout. */
+  /** Use the template's spring instead of its tween. */
+  spring?: boolean;
   as?: "div" | "section" | "li" | "span";
   className?: string;
 };
 
-/**
- * Reveals its children on scroll, using the template's easing and offsets.
- *
- * Honours `prefers-reduced-motion` by rendering the content immediately and
- * statically — never by animating faster.
- */
 export function Reveal({
   children,
   from = "section",
+  trigger = "scroll",
   delay = 0,
   duration = DURATION.standard,
+  spring = false,
   as = "div",
   className,
 }: RevealProps) {
@@ -37,13 +44,24 @@ export function Reveal({
     return <Tag className={className}>{children}</Tag>;
   }
 
+  const transition = spring ? { ...SPRING, delay } : { duration, delay, ease: EASE };
+
+  // data-anim lets a static capture of the page replay the same motion in CSS.
+  const marker = `${from}${spring ? "-spring" : ""}`;
+
   return (
     <MotionTag
       className={className}
+      data-anim={marker}
+      data-anim-delay={delay}
       initial={FROM[from]}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration, delay, ease: EASE }}
+      {...(trigger === "load"
+        ? { animate: { opacity: 1, y: 0 } }
+        : {
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true, margin: "-10% 0px" },
+          })}
+      transition={transition}
     >
       {children}
     </MotionTag>
